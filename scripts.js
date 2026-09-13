@@ -128,4 +128,20 @@ filterButtons.forEach(button => {
     });
 });
 
-renderProducts(products);
+const cartButton = document.getElementById("cartButton");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartClose = document.getElementById("cartClose");
+
+cartButton.addEventListener("click", () => {
+    cartOverlay.classList.add("active");
+});
+
+cartClose.addEventListener("click", () => {
+    cartOverlay.classList.remove("active");
+});
+
+cartOverlay.addEventListener("click", event => {
+    if (event.target === cartOverlay) {
+        cartOverlay.classList.remove("active");
+    }
+});

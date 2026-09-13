@@ -37,7 +37,7 @@
                 </button>
 
                 <button class="cart-button" id="cartButton">
-                    carrito
+                    🛒(<span id="cartCount">0</span>)
                 </button>
 
             </div>
@@ -45,6 +45,27 @@
         </div>
 
     </header>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <aside class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu carrito</h2>
+                <button class="cart-close" id="cartClose">&times;</button>
+            </div>
+
+            <div class="cart-items" id="cartItems"></div>
+
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total</span>
+                    <strong id="cartTotal">$0</strong>
+                </div>
+                <button class="button button-primary cart-checkout" id="checkoutButton">
+                    Finalizar compra
+                </button>
+            </div>
+        </aside>
+    </div>
 
 
     <main>
