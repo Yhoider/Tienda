@@ -314,5 +314,24 @@ checkoutButton.addEventListener("click", () => {
     alert("Compra realizada correctamente.");
 });
 
+const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(isAlt) {
+    document.body.classList.toggle("alt-theme", isAlt);
+    themeToggle.textContent = isAlt ? "☀️" : "🌑";
+}
+
+const savedTheme = localStorage.getItem("theme");
+
+applyTheme(savedTheme === "alt");
+
+themeToggle.addEventListener("click", () => {
+    const isAlt = !document.body.classList.contains("alt-theme");
+
+    applyTheme(isAlt);
+    localStorage.setItem("theme", isAlt ? "alt" : "default");
+});
+
+
 renderProducts(products);
 renderCart()
