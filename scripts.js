@@ -129,7 +129,6 @@ filterButtons.forEach(button => {
 });
 
 const cartButton = document.getElementById("cartButton");
-const cartOverlay = document.getElementById("cartOverlay");
 const cartClose = document.getElementById("cartClose");
 
 cartButton.addEventListener("click", () => {
@@ -145,3 +144,5 @@ cartOverlay.addEventListener("click", event => {
         cartOverlay.classList.remove("active");
     }
 });
+
+renderProducts(products);
