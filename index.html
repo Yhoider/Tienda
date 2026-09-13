@@ -127,12 +127,10 @@
 
 
 
-        <section class="prescription section">
+        <section class="prescription section" id="recetas">
+            <div class="container prescription-container">
 
-            <div class="container-prescription-container">
-
-                <div>
-
+                <div class="prescription-info">
                     <p class="section-label">
                         RECETAS MÉDICAS FÁCIL
                     </p>
@@ -141,33 +139,70 @@
                         Carga tu receta
                     </h2>
 
-                    <p>
-                        Envía la información de tu receta para
-                        facilitar la revisión de los productos
-                        que necesitas.
+                    <p class="prescription-description">
+                        Algunos medicamentos requieren receta médica para su venta.
+                        Envía la información y el archivo de tu receta para facilitar
+                        su revisión.
                     </p>
 
+                    <div class="prescription-benefits">
+
+                        <div class="benefit">
+                            <span class="benefit-icon">✓</span>
+
+                            <div>
+                                <strong>Seguro</strong>
+                                <p>Tu información será revisada de forma segura.</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit">
+                            <span class="benefit-icon">⚡</span>
+
+                            <div>
+                                <strong>Rápido</strong>
+                                <p>Facilita la revisión de tu solicitud.</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit">
+                            <span class="benefit-icon">○</span>
+
+                            <div>
+                                <strong>Fácil</strong>
+                                <p>Completa el formulario y envía tu receta.</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <form class="prescription-form" id="prescriptionForm" >
+                <form class="prescription-form" id="prescriptionForm">
 
-                    <label for="prescriptionName">
-                        Nombre
-                    </label>
+                    <div class="form-group">
+                        <label for="prescriptionName">
+                            Nombre
+                        </label>
 
-                    <input type="text" id="prescriptionName" name="name" placeholder="Tu nombre">
+                        <input type="text" id="prescriptionName" name="name" placeholder="Tu nombre">
+                    </div>
 
-                    <label for="prescriptionEmail">
-                        Correo electrónico
-                    </label>
+                    <div class="form-group">
+                        <label for="prescriptionEmail">
+                            Correo electrónico
+                        </label>
 
-                    <input type="email" id="prescriptionEmail" name="email" placeholder="correo@ejemplo.com">
+                        <input type="email" id="prescriptionEmail" name="email" placeholder="correo@ejemplo.com" >
+                    </div>
 
-                    <label for="prescriptionFile">
-                        Receta
-                    </label>
+                    <div class="form-group">
+                        <label for="prescriptionFile">
+                            Receta
+                        </label>
 
-                    <input type="file" id="prescriptionFile" name="prescription" accept="image/*,.pdf" >
+                        <input type="file" id="prescriptionFile" name="prescription" accept="image/*,.pdf">
+
+                    </div>
 
                     <button type="submit" class="button button-primary">
                         Subir receta
@@ -176,7 +211,6 @@
                 </form>
 
             </div>
-
         </section>
 
 
