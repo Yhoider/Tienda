@@ -332,6 +332,73 @@ themeToggle.addEventListener("click", () => {
     localStorage.setItem("theme", isAlt ? "alt" : "default");
 });
 
+const prescriptionForm = document.getElementById("prescriptionForm");
+
+prescriptionForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = document.getElementById("prescriptionName");
+    const email = document.getElementById("prescriptionEmail");
+    const file = document.getElementById("prescriptionFile");
+
+    let valid = true;
+
+    document.querySelectorAll(".form-error").forEach(error => {
+        error.remove();
+    });
+
+    if (name.value.trim() === "") {
+        showError(name, "Ingresa tu nombre.");
+        valid = false;
+    }
+
+    if (email.value.trim() === "") {
+        showError(email, "Ingresa tu correo electrónico.");
+        valid = false;
+    } else if (!email.validity.valid) {
+        showError(email, "Ingresa un correo electrónico válido.");
+        valid = false;
+    }
+
+    if (file.files.length === 0) {
+        showError(file, "Selecciona una receta.");
+        valid = false;
+    }
+
+    if (valid) {
+        alert("Receta enviada correctamente.");
+        prescriptionForm.reset();
+    }
+});
+
+function showError(input, message) {
+    const error = document.createElement("p");
+
+    error.className = "form-error";
+    error.textContent = message;
+
+    input.parentElement.appendChild(error);
+}
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const message = document.getElementById("message");
+
+    document.querySelectorAll(".form-error").forEach(error => {
+        error.remove();
+    });
+
+    if (message.value.trim() === "") {
+        showError(message, "Escribe un mensaje.");
+        return;
+    }
+
+    alert("Mensaje enviado correctamente.");
+    contactForm.reset();
+});
 
 renderProducts(products);
 renderCart()
