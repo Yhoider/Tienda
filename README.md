@@ -81,6 +81,10 @@ dudas con algunos metodos como el localStorage
 ### Escritorio
 
 ![alt text](image-4.png)
-![alt text](image-3.png)
+![alt text](image-5.png)
 ![alt text](image-1.png)
 ![alt text](image-2.png)
+
+## link vercel
+
+dominio: https://tienda-ittv.vercel.app/
