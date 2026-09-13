@@ -110,4 +110,22 @@ function renderProducts(productsToRender) {
     });
 }
 
+const filterButtons = document.querySelectorAll(".filter-button");
+
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const category = button.dataset.category;
+
+        if (category === "todos") {
+            renderProducts(products);
+        } else {
+            const filteredProducts = products.filter(product => product.category === category);
+            renderProducts(filteredProducts);
+        }
+    });
+});
+
 renderProducts(products);

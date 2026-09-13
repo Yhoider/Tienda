@@ -19,6 +19,8 @@ saldran en el catalogo de medicamentos.
 
 - Navegación entre secciones
 - Diseño responsive
+- Catalogo de productos
+- Filtro de los medicamentos
 
 ## Flexbox y Grid
 
@@ -35,3 +37,10 @@ cantidad de columnas dependiendo del tamaño de la pantalla.
 Para el diseño responsivo se utilizo porcentajes, unidades relativas, `fr`,
 `clamp()` y media queries para adaptarse a diferentes
 tamaños de pantalla.
+
+## JavaScript
+
+JavaScript se utiliza para:
+
+- Generar los productos.
+- Filtrar productos.
