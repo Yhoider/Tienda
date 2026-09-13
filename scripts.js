@@ -132,6 +132,9 @@ const cartButton = document.getElementById("cartButton");
 const cartOverlay = document.getElementById("cartOverlay");
 const cartClose = document.getElementById("cartClose");
 const cartItems = document.getElementById("cartItems");
+const cartTotal = document.getElementById("cartTotal");
+const checkoutButton = document.getElementById("checkoutButton");
+const cartCount = document.getElementById("cartCount");
 
 let cart = [];
 function addToCart(productId) {
@@ -170,19 +173,123 @@ productsGrid.addEventListener("click", event => {
 function renderCart() {
     cartItems.innerHTML = "";
 
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <p class="cart-empty">
+                Tu carrito está vacío.
+            </p>
+        `;
+
+        cartTotal.textContent = "$0";
+        cartCount.textContent = "0";
+
+        return;
+    }
+
     cart.forEach(item => {
         const cartItem = document.createElement("div");
 
         cartItem.className = "cart-item";
 
         cartItem.innerHTML = `
-            <h3>${item.name}</h3>
-            <p>Cantidad: ${item.quantity}</p>
+            <div class="cart-item-image">
+                <img src="${item.image}" alt="Ilustración de ${item.name}">
+            </div>
+
+            <div class="cart-item-info">
+                <h3>${item.name}</h3>
+
+                <p class="cart-item-price">
+                    $${item.price.toLocaleString("es-CO")}
+                </p>
+
+                <div class="cart-item-controls">
+                    <div class="quantity-controls">
+                        <button
+                            class="quantity-button"
+                            data-action="decrease"
+                            data-id="${item.id}"
+                        >
+                            −
+                        </button>
+
+                        <span class="quantity">
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            class="quantity-button"
+                            data-action="increase"
+                            data-id="${item.id}"
+                        >
+                            +
+                        </button>
+                    </div>
+
+                    <button
+                        class="remove-button"
+                        data-action="remove"
+                        data-id="${item.id}"
+                    >
+                        Eliminar
+                    </button>
+                </div>
+            </div>
         `;
 
         cartItems.appendChild(cartItem);
     });
+
+    updateCartTotal();
 }
+
+function updateCartTotal() {
+    const total = cart.reduce((sum, item) => {
+        return sum + item.price * item.quantity;
+    }, 0);
+
+    const quantity = cart.reduce((sum, item) => {
+        return sum + item.quantity;
+    }, 0);
+
+    cartTotal.textContent = `$${total.toLocaleString("es-CO")}`;
+    cartCount.textContent = quantity;
+}
+
+cartItems.addEventListener("click", event => {
+    const button = event.target.closest("button");
+
+    if (!button) {
+        return;
+    }
+
+    const productId = Number(button.dataset.id);
+    const action = button.dataset.action;
+
+    const item = cart.find(item => item.id === productId);
+
+    if (!item) {
+        return;
+    }
+
+    if (action === "increase") {
+        item.quantity++;
+    }
+
+    if (action === "decrease") {
+        item.quantity--;
+
+        if (item.quantity <= 0) {
+            cart = cart.filter(item => item.id !== productId);
+        }
+    }
+
+    if (action === "remove") {
+        cart = cart.filter(item => item.id !== productId);
+    }
+
+    renderCart();
+});
 
 cartButton.addEventListener("click", () => {
     cartOverlay.classList.add("active");
@@ -196,6 +303,15 @@ cartOverlay.addEventListener("click", event => {
     if (event.target === cartOverlay) {
         cartOverlay.classList.remove("active");
     }
+});
+
+checkoutButton.addEventListener("click", () => {
+    if (cart.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+    }
+
+    alert("Compra realizada correctamente.");
 });
 
 renderProducts(products);
