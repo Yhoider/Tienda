@@ -131,6 +131,58 @@ filterButtons.forEach(button => {
 const cartButton = document.getElementById("cartButton");
 const cartOverlay = document.getElementById("cartOverlay");
 const cartClose = document.getElementById("cartClose");
+const cartItems = document.getElementById("cartItems");
+
+let cart = [];
+function addToCart(productId) {
+    const product = products.find(product => product.id === productId);
+
+    if (!product) {
+        return;
+    }
+
+    const existingProduct = cart.find(item => item.id === productId);
+
+    if (existingProduct) {
+        existingProduct.quantity++;
+    } else {
+        cart.push({
+            ...product,
+            quantity: 1
+        });
+    }
+
+    renderCart();
+}
+
+productsGrid.addEventListener("click", event => {
+    const button = event.target.closest(".add-cart-button");
+
+    if (!button) {
+        return;
+    }
+
+    const productId = Number(button.dataset.id);
+
+    addToCart(productId);
+});
+
+function renderCart() {
+    cartItems.innerHTML = "";
+
+    cart.forEach(item => {
+        const cartItem = document.createElement("div");
+
+        cartItem.className = "cart-item";
+
+        cartItem.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>Cantidad: ${item.quantity}</p>
+        `;
+
+        cartItems.appendChild(cartItem);
+    });
+}
 
 cartButton.addEventListener("click", () => {
     cartOverlay.classList.add("active");
@@ -147,3 +199,4 @@ cartOverlay.addEventListener("click", event => {
 });
 
 renderProducts(products);
+renderCart()
