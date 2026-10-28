@@ -5,6 +5,7 @@ type ProductCardProps = {
   category: string;
   emoji: string;
   stock: number;
+  imageUrl?: string;
   onAdd: () => void;
 };
 
@@ -15,12 +16,13 @@ export function ProductCard({
   category,
   emoji,
   stock,
+  imageUrl,
   onAdd,
 }: ProductCardProps) {
   return (
     <article className="product-card">
-      <div className="product-art" aria-hidden="true">
-        <span>{emoji}</span>
+      <div className="product-art">
+        {imageUrl ? <img src={imageUrl} alt={`Imagen de ${name}`} /> : <span aria-hidden="true">{emoji}</span>}
       </div>
       <div className="product-copy">
         <p className="product-category">{category}</p>

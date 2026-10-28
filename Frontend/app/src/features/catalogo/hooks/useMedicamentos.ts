@@ -1,20 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Product } from "../domain/products";
+import type { CatalogPage } from "../domain/products";
 import { getMedicamentos } from "../services/medicamentosService";
 
-export function useMedicamentos() {
-  const [medicamentos, setMedicamentos] = useState<Product[]>([]);
+export function useMedicamentos(page: number, categoria: string) {
+  const [catalog, setCatalog] = useState<CatalogPage>({ items: [], page: 1, totalPages: 1, total: 0 });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getMedicamentos()
-      .then(setMedicamentos)
+    let active = true;
+    setIsLoading(true);
+    setError("");
+    getMedicamentos(page, 6, categoria)
+      .then((nextCatalog) => { if (active) setCatalog(nextCatalog); })
       .catch((reason) => setError(reason instanceof Error ? reason.message : "No fue posible cargar el catálogo."))
-      .finally(() => setIsLoading(false));
-  }, []);
+      .finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
+  }, [page, categoria]);
 
-  return { medicamentos, error, isLoading };
+  return { ...catalog, error, isLoading };
 }

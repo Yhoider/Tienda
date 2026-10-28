@@ -101,47 +101,6 @@ a {
   color: var(--coral);
 }
 
-.search-bar {
-  align-items: center;
-  background: #f6faf9;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: #81a09d;
-  display: flex;
-  gap: 8px;
-  max-width: 300px;
-  padding: 9px 13px;
-  width: 100%;
-}
-
-.search-bar span {
-  font-size: 21px;
-  line-height: 15px;
-}
-
-.search-bar input {
-  background: transparent;
-  border: 0;
-  color: var(--ink);
-  font-size: 12px;
-  min-width: 0;
-  outline: none;
-  width: 100%;
-}
-
-.search-bar input::placeholder {
-  color: #91a5a4;
-}
-
-.search-bar button {
-  background: transparent;
-  border: 0;
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 15px;
-  padding: 0;
-}
-
 .header-actions {
   display: flex;
   gap: 10px;
@@ -495,6 +454,41 @@ main > section {
   font-size: 70px;
   height: 190px;
   justify-content: center;
+}
+
+.product-art img {
+  height: 100%;
+  object-fit: contain;
+  padding: 18px;
+  width: 100%;
+}
+
+.catalog-pagination {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.catalog-pagination button {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--deep);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.catalog-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.catalog-pagination span {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .product-copy {
@@ -1032,7 +1026,6 @@ footer small {
 }
 
 .dark-mode .site-header,
-.dark-mode .search-bar,
 .dark-mode .category-card,
 .dark-mode .product-card,
 .dark-mode .recipe-form,
@@ -1046,15 +1039,12 @@ footer small {
   border-color: #2a4a50;
 }
 
-.dark-mode .nav-links a,
-.dark-mode .search-bar,
-.dark-mode .search-bar input::placeholder {
+.dark-mode .nav-links a {
   color: #a7c1bd;
 }
 
 .dark-mode .header-actions button,
 .dark-mode .menu-toggle,
-.dark-mode .search-bar,
 .dark-mode .filter-pills button,
 .dark-mode .small-button,
 .dark-mode .close-button {
@@ -1150,15 +1140,6 @@ footer small {
 
   .account-button small {
     display: none;
-  }
-
-  .search-bar {
-    max-width: none;
-    order: 5;
-    position: absolute;
-    right: 24px;
-    top: 78px;
-    width: calc(100% - 48px);
   }
 
   .auth-modal {

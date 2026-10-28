@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { SearchBar } from "./SearchBar";
 import type { User } from "../../auth/domain/types";
 
 type SiteHeaderProps = {
-  query: string;
-  onQueryChange: (query: string) => void;
   cartCount: number;
   onCartClick: () => void;
   menuOpen: boolean;
@@ -19,7 +16,7 @@ type SiteHeaderProps = {
   user: User | null;
 };
 
-export function SiteHeader({ query, onQueryChange, cartCount, onCartClick, menuOpen, onMenuToggle, onNavigate, darkMode, onThemeToggle, onAuthClick, onLogout, user }: SiteHeaderProps) {
+export function SiteHeader({ cartCount, onCartClick, menuOpen, onMenuToggle, onNavigate, darkMode, onThemeToggle, onAuthClick, onLogout, user }: SiteHeaderProps) {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
 
   function handleLogout() {
@@ -40,7 +37,6 @@ export function SiteHeader({ query, onQueryChange, cartCount, onCartClick, menuO
         <a href="#recetas" onClick={onNavigate}>Recetas</a>
         <a href="#contacto" onClick={onNavigate}>Contacto</a>
       </nav>
-      <SearchBar value={query} onChange={onQueryChange} />
       <div className="header-actions">
         <button aria-label={darkMode ? "Activar modo claro" : "Activar modo oscuro"} onClick={onThemeToggle}>{darkMode ? "☀" : "◐"}</button>
         <button aria-label={`Carrito con ${cartCount} productos`} onClick={onCartClick}>🛒 <b>{cartCount}</b></button>
