@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Product } from "../../catalogo/domain/products";
 
 type CartDrawerProps = {
@@ -5,6 +6,9 @@ type CartDrawerProps = {
   items: Product[];
   onClose: () => void;
   onRemove: (index: number) => void;
+  isAuthenticated: boolean;
+  onRequireAuthentication: () => void;
+  onCheckout: (address: string) => Promise<void>;
 };
 
 export function CartDrawer({
@@ -12,21 +16,40 @@ export function CartDrawer({
   items,
   onClose,
   onRemove,
+  isAuthenticated,
+  onRequireAuthentication,
+  onCheckout,
 }: CartDrawerProps) {
-  if (!open) return null;
+  const [address, setAddress] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleCheckout() {
+    if (!isAuthenticated) {
+      onRequireAuthentication();
+      return;
+    }
+    setError("");
+    setIsSubmitting(true);
+    try {
+      await onCheckout(address);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "No fue posible crear el pedido.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <div className="cart-overlay" onClick={onClose}>
+    <div className={open ? "cart-overlay is-open" : "cart-overlay"} onClick={onClose} aria-hidden={!open}>
       <aside
-        className="cart-drawer"
+        className={open ? "cart-drawer is-open" : "cart-drawer"}
         onClick={(event) => event.stopPropagation()}
       >
         <div className="cart-heading">
           <div>
             <p className="eyebrow">TU COMPRA</p>
-            <h2>
-              Mi carrito <span>({items.length})</span>
-            </h2>
+            <h2>Mi carrito</h2>
           </div>
           <button
             className="close-button"
@@ -54,7 +77,7 @@ export function CartDrawer({
                   <span className="cart-item-art">{item.emoji}</span>
                   <div>
                     <strong>{item.name}</strong>
-                    <small>{item.price}</small>
+                    <small>${item.price.toLocaleString("es-CO")}</small>
                   </div>
                   <button
                     onClick={() => onRemove(index)}
@@ -73,18 +96,17 @@ export function CartDrawer({
                 {items
                   .reduce(
                     (total, item) =>
-                      total + Number(item.price.replace(/[$.]/g, "")),
+                      total + item.price,
                     0
                   )
                   .toLocaleString("es-CO")}
               </strong>
             </div>
 
-            <button
-              className="primary-button checkout-button"
-              onClick={onClose}
-            >
-              Continuar compra <span>→</span>
+            {isAuthenticated && <label className="checkout-address">Dirección de entrega<input value={address} onChange={(event) => setAddress(event.target.value)} placeholder="Calle 10 # 20-30, Bogotá" required minLength={5} /></label>}
+            {error && <p className="auth-error" role="alert">{error}</p>}
+            <button className="primary-button checkout-button" onClick={handleCheckout} disabled={isSubmitting || (isAuthenticated && address.trim().length < 5)}>
+              {isSubmitting ? "Creando pedido..." : isAuthenticated ? "Confirmar pedido" : "Inicia sesión para comprar"} <span>→</span>
             </button>
           </>
         )}

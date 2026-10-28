@@ -1,9 +1,10 @@
 type ProductCardProps = {
   name: string;
   description: string;
-  price: string;
+  price: number;
   category: string;
   emoji: string;
+  stock: number;
   onAdd: () => void;
 };
 
@@ -13,6 +14,7 @@ export function ProductCard({
   price,
   category,
   emoji,
+  stock,
   onAdd,
 }: ProductCardProps) {
   return (
@@ -25,9 +27,9 @@ export function ProductCard({
         <h3>{name}</h3>
         <p>{description}</p>
         <div className="product-footer">
-          <strong>{price}</strong>
-          <button className="small-button" onClick={onAdd}>
-            Agregar <span>＋</span>
+          <strong>${price.toLocaleString("es-CO")}</strong>
+          <button className="small-button" onClick={onAdd} disabled={stock < 1}>
+            {stock > 0 ? <>Agregar <span>＋</span></> : "Agotado"}
           </button>
         </div>
       </div>
