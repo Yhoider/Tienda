@@ -35,12 +35,36 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
   const headers = new Headers(options.headers);
   const token = getToken();
-  const isJson = options.body !== null && typeof options.body === "object" && !(options.body instanceof FormData) && !(options.body instanceof URLSearchParams) && !(options.body instanceof Blob);
+  const body = options.body;
+
+  const isJson =
+    body !== null &&
+    body !== undefined &&
+    typeof body === "object" &&
+    !(body instanceof FormData) &&
+    !(body instanceof URLSearchParams) &&
+    !(body instanceof Blob) &&
+    !(body instanceof ArrayBuffer) &&
+    !(body instanceof ReadableStream);
 
   if (token) headers.set("Authorization", `Bearer ${token}`);
-  if (isJson && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
+  if (isJson && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers, body: isJson ? JSON.stringify(options.body) : options.body });
+  const requestBody: BodyInit | null | undefined =
+    body == null
+      ? body
+      : isJson
+        ? JSON.stringify(body)
+        : body as BodyInit;
+
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
+    headers,
+    body: requestBody,
+  });
+
   const data = await parseBody(response);
 
   if (!response.ok) throw new ApiError(response.status, getErrorMessage(data));
