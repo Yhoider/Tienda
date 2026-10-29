@@ -146,4 +146,4 @@ dudas con algunos metodos como el localStorage
 
 ## link vercel
 
-dominio:https://tienda-ittv.vercel.app/](https://tienda-71ozu1d3v-yhoiders-projects.vercel.app/](https://tienda-yhoiders-projects.vercel.app/
+dominio: https://tienda-yhoiders-projects.vercel.app/
