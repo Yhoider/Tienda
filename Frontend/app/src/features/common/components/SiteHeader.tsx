@@ -36,6 +36,7 @@ export function SiteHeader({ cartCount, onCartClick, menuOpen, onMenuToggle, onN
         <a href="#catalogo" onClick={onNavigate}>Medicamentos</a>
         <a href="#recetas" onClick={onNavigate}>Recetas</a>
         <a href="#contacto" onClick={onNavigate}>Contacto</a>
+        {user?.role === "admin" && <a href="/admin">Administración</a>}
       </nav>
       <div className="header-actions">
         <button aria-label={darkMode ? "Activar modo claro" : "Activar modo oscuro"} onClick={onThemeToggle}>{darkMode ? "☀" : "◐"}</button>

@@ -50,5 +50,6 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 export const api = {
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body: object) => request<T>(path, { method: "POST", body }),
+  patch: <T>(path: string, body: object) => request<T>(path, { method: "PATCH", body }),
   postRaw: <T>(path: string, body: BodyInit, headers: HeadersInit) => request<T>(path, { method: "POST", body, headers }),
 };
